@@ -1,0 +1,23 @@
+<sb-layout-dashboard>
+    <div class="container doctor-panel">
+    <h2 style="font-size: 3rem;"><strong>Pacientes</strong></h2>
+    <table *ngIf="patients.length > 0">
+      <thead>
+          <tr>
+              <th>Nome do Paciente</th>
+              <th>Data de nascimento</th>
+              <th>Email</th>
+              <th>Telefone</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let patient of patients">
+              <td>{{ patient.name }}</td>
+              <td>{{ patient.birthDate | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ patient.email }}</td>
+              <td>{{ patient.phoneNumber }}</td>
+          </tr>
+      </tbody>
+    </table>
+    </div>
+</sb-layout-dashboard>

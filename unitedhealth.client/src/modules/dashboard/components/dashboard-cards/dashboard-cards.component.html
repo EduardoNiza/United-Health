@@ -1,0 +1,47 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduling Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="sb-layout-dashboard">
+        <div class="container">
+            <div class="row">
+                <section id="personaltrainers" class="service-section ml-5">
+                    <i class="fas fa-dumbbell fa-3x"></i>
+                    <h2>Personal Training</h2>
+                    <p>Check your current training regimen.</p>
+                    <div *ngIf="workout">
+                        <p><strong>Trainer name</strong> : {{ workout?.name }}</p>
+                        <p><strong>Workout</strong> : {{ workout?.prescription }}</p>
+                    </div>
+                    <div *ngIf="!workout">You do not have a workout yet!</div>
+                </section>
+                <section id="nutritionists" class="service-section ml-5">
+                    <i class="fas fa-apple-alt fa-3x"></i>
+                    <h2>Nutrition</h2>
+                    <p>Check your current diet.</p>
+                    <div *ngIf="diet">
+                        <p><strong>Nutritionist name</strong> : {{ diet?.name }}</p>
+                        <p><strong>Diet</strong> : {{ diet?.prescription }}</p>
+                    </div>
+                    <div *ngIf="!diet">You do not have a diet yet!</div>
+                </section>
+            </div>
+            <section id="locations">
+                <h2>Locations</h2>
+                <div class="row">
+                    <div class="location-section ml-5">
+                        <h3>Rua Augusta, 1500 - Consolação</h3>
+                        <iframe src="https://maps.google.com/maps?q=Rua%20Augusta%2C%201500%20-%20Consola%C3%A7%C3%A3o%2C%20S%C3%A3o%20Paulo%20-%20SP&t=&z=17&ie=UTF8&iwloc=&output=embed" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                    <div class="location-section ml-5">
+                        <h3>Avenida Paulista, 900 - Bela Vista</h3>
+                        <iframe src="https://maps.google.com/maps?q=Avenida%20Paulista%2C%20900%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP&t=&z=17&ie=UTF8&iwloc=&output=embed" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>

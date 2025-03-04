@@ -1,0 +1,71 @@
+name: Backend
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Server Docker image
+      run: docker build -t unitedhealth.azurecr.io/server -f UnitedHealth.Server/Dockerfile .
+    - name: Build the Medical Docker image
+      run: docker build -t unitedhealth.azurecr.io/medical -f UnitedHealth.Medical/Dockerfile .
+    - name: Build the Training Docker image
+      run: docker build -t unitedhealth.azurecr.io/training -f UnitedHealth.Training/Dockerfile .
+    - name: Build the Nutrition Docker image
+      run: docker build -t unitedhealth.azurecr.io/nutrition -f UnitedHealth.Nutrition/Dockerfile .
+    - uses: azure/docker-login@v1
+      with:
+        login-server: unitedhealth.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    - name: Push the Server Docker image
+      run: docker push unitedhealth.azurecr.io/server
+    - name: Push the Medical Docker image
+      run: docker push unitedhealth.azurecr.io/medical
+    - name: Push the Training Docker image
+      run: docker push unitedhealth.azurecr.io/training
+    - name: Push the Nutrition Docker image
+      run: docker push unitedhealth.azurecr.io/nutrition
+      
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build and deploy Server Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        containerAppName: unitedhealth-server
+        resourceGroup: cs
+        imageToDeploy: unitedhealth.azurecr.io/server:latest
+    - name: Build and deploy Nutrition Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        containerAppName: unitedhealth-nutrition
+        resourceGroup: cs
+        imageToDeploy: unitedhealth.azurecr.io/nutrition:latest
+    - name: Build and deploy Training Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        containerAppName: unitedhealth-training
+        resourceGroup: cs
+        imageToDeploy: unitedhealth.azurecr.io/training:latest
+    - name: Build and deploy Medical Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        containerAppName: unitedhealth-medical
+        resourceGroup: cs
+        imageToDeploy: unitedhealth.azurecr.io/medical:latest
+    

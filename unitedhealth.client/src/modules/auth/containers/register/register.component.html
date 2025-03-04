@@ -1,0 +1,98 @@
+<sb-layout-auth
+    ><div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                    <div class="card-body">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputName">Name</label>
+                                <input class="form-control py-4" formControlName="name" type="text" placeholder="Enter full name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
+                                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.name.errors.required">Full name is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputUsername">Username</label>
+                                <input class="form-control py-4" formControlName="username" type="text" placeholder="Enter username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+                                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                    <div *ngIf="f.username.errors.required">Username is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputBirthDate">Birth date</label>
+                                <input class="form-control py-4" formControlName="birthDate" type="date" placeholder="Enter birth date" [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"/>
+                                <div *ngIf="submitted && f.birthDate.errors" class="invalid-feedback">
+                                    <div *ngIf="f.birthDate.errors.required">Birth date is required</div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="inputPhoneNumber">Phone Number</label>
+                                        <input class="form-control py-4" formControlName="phoneNumber" type="text" maxlength="10" placeholder="Enter phone number" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }"/>
+                                        <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                                            <div *ngIf="f.phoneNumber.errors.required">Phone number is required</div>
+                                            <div *ngIf="f.phoneNumber.errors.pattern">Phone number format is invalid</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="inputEmailAddress">Email</label>
+                                        <input class="form-control py-4" formControlName="email" type="email" aria-describedby="emailHelp" placeholder="Enter email address" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Email is required</div>
+                                            <div *ngIf="f.email.errors.email">Email format is invalid</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputType">Profile</label>
+                                <select class="form-control" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }">
+                                    <option [ngValue]="null" disabled>Select profile</option>
+                                    <option *ngFor="let p of profiles" [ngValue]="p.value">{{p.name}}</option>
+                                </select>
+                                <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                                    <div *ngIf="f.type.errors.required">Profile is required</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="inputPassword">Password</label>
+                                        <input class="form-control py-4" formControlName="password" type="password" placeholder="Enter password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                            <div *ngIf="f.password.errors.required">Password is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
+                                        <input class="form-control py-4" formControlName="confirmPassword" type="password" placeholder="Confirm password" [ngClass]="{ 'is-invalid': submitted && (f.confirmPassword.errors || form.errors) }"/>
+                                        <div *ngIf="submitted && (f.confirmPassword.errors || form.errors)" class="invalid-feedback">
+                                            <div *ngIf="f.confirmPassword.errors?.required">Confirm Password is required</div>
+                                            <div *ngIf="form.errors?.notSame">Both passwords must match</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block">Create Account <span *ngIf="loading" class="spinner-border spinner-border-sm"></span></button></div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="small"><a routerLink="/auth/login">Have an account? Go to login</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></sb-layout-auth
+>

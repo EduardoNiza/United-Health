@@ -1,0 +1,26 @@
+<sb-layout-dashboard>
+    <div class="container doctor-panel">
+      <h2 style="font-size: 3rem;"><strong>Perfil Nutricionista</strong></h2>
+  
+      <h3 class="mb-3 text-center" style="font-size: 1.5rem;"><strong>Informações pessoais</strong></h3>
+      <div class="personal-info">
+        <p><strong>Name</strong> : {{ nutritionistName }}</p>
+        <p><strong>Username</strong> : {{ nutritionistUsername }}</p>
+        <p><strong>Telephone number</strong> : {{ nutritionistPhone }}</p>
+        <p><strong>Email</strong> : {{ nutritionistEmail }}</p>
+        <p><strong>Birthdate</strong> : {{ nutritionistBirthDate | date:'yyyy-MM-dd'}}</p>
+      </div>
+      
+      <form class="time-slot-form">
+        <div class="mb-3">
+          <div class="mb-3 text-center">
+          <label for="timeSlotInput" class="form-label" style="font-size: 1.5rem;">Inform available time slot</label>
+          <input type="datetime-local" class="form-control" id="timeSlotInput" [(ngModel)]="freeTimeSlot" name="freeTimeSlot">
+        </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="submitFreeTimeSlot()">Submit Time Slot</button>
+      </form>
+      
+    </div>
+  </sb-layout-dashboard>
+  

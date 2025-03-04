@@ -1,0 +1,75 @@
+<sb-layout-dashboard>
+<div class="container">
+  <h2 style="font-size: 3rem;"><strong>Personal Trainer</strong></h2>
+  <h2 style="font-size: 1.5rem;"><strong>Schedule an appointment</strong></h2>
+    <div class="doctor-list"> 
+      <ul>
+        <li *ngFor="let trainer of getTrainer()">
+          <button (click)="onSelectDoctor(trainer)">{{ trainer.name }}</button>
+        </li>
+      </ul>
+    </div>
+
+ <div *ngIf="selectedDoctor">
+      <p>Select a hour:</p>
+      <div class="time-slots">
+        <button *ngFor="let timeSlot of selectedDoctor.freeTimeSlots.split(', ')" class="time-slot" (click)="selectTimeSlot(timeSlot)">
+          {{ timeSlot }}
+        </button>
+      </div>
+      <button *ngIf="selectedTimeSlot" class="schedule-btn" (click)="onScheduleConsultation()">Schedule Consultation</button>
+    </div>
+    
+    <h2 style="font-size: 1.5rem; margin-top: 60px;"><strong>My consultations</strong></h2>
+    <h2 style="font-size: 1.1rem;">Previous consultations</h2>
+    <table *ngIf="passedconsultations.length > 0">
+      <thead>
+          <tr>
+              <th>Name of the Personal Trainer</th>
+              <th>Name of the patient</th>
+              <th>Date of the appointment</th>
+              <th>Medical prescription</th>
+              <th>Status of the consultation</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let consultation of passedconsultations">
+              <td>{{ consultation.doctorName }}</td>
+              <td>{{ consultation.patientName }}</td>
+              <td>{{ consultation.scheduled | date: 'short' }}</td>
+              <td>{{ consultation.prescription }}</td>
+              <td>Passed</td>
+          </tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-size: 1.1rem; margin-top: 60px;">Future consultations</h2>
+    <table *ngIf="futureconsultations.length > 0">
+      <thead>
+          <tr>
+              <th>Name of the Personal Trainer</th>
+              <th>Name of the patient</th>
+              <th>Date of the appointment</th>
+              <th>Medical prescription</th>
+              <th>Status of the consultation</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let consultation of futureconsultations">
+              <td>{{ consultation.doctorName }}</td>
+              <td>{{ consultation.patientName }}</td>
+              <td>{{ consultation.scheduled | date: 'short' }}</td>
+              <td>{{ consultation.prescription }}</td>
+              <td>{{ consultation.isCompleted ? 'Appointment canceled' : 'Appointment active' }}</td>
+              <td *ngIf="!consultation.isCompleted">
+                <button (click)="updateConsultationStatus(consultation)">
+                  Cancel appointment
+                </button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+
+  </div>
+</sb-layout-dashboard>

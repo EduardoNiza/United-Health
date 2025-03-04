@@ -1,0 +1,58 @@
+<sb-layout-dashboard>
+  <div class="container">
+    <div class="dropdown">
+      <label for="specialty-select">Choose a specialty:</label>
+      <select id="specialty-select" (change)="onSelectSpecialty($event.target.value)">
+        <option value="" disabled selected>Select a specialty</option>
+        <option *ngFor="let specialty of specialties" [value]="specialty">{{ specialty }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="selectedSpecialty" class="doctor-list">
+      <p>These are the available doctors:</p>
+      <ul>
+        <li *ngFor="let doctor of doctors">
+          <button (click)="onSelectDoctor(doctor)">{{ doctor.name }}</button>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="selectedDoctor">
+      <p>These are the available time slots for Dr. {{ selectedDoctor.name }}:</p>
+      <div class="time-slots">
+        <button *ngFor="let timeSlot of selectedDoctor.freeTimeSlots.split(', ')" class="time-slot" (click)="selectTimeSlot(timeSlot)">
+          {{ timeSlot }}
+        </button>
+      </div>
+      <button *ngIf="selectedTimeSlot" class="schedule-btn" (click)="onScheduleConsultation()">Schedule Consultation</button>
+    </div>
+    
+    <button (click)="loadConsultations()">Search My Consultations</button>
+    <table *ngIf="consultations.length > 0">
+      <thead>
+          <tr>
+              <th>Doctor's Name</th>
+              <th>Patient's Name</th>
+              <th>Scheduled Date</th>
+              <th>Medical Prescription</th>
+              <th>Consultation Status</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let consultation of consultations">
+              <td>{{ consultation.doctorName }}</td>
+              <td>{{ consultation.patientName }}</td>
+              <td>{{ consultation.scheduled | date: 'short' }}</td>
+              <td>{{ consultation.prescription }}</td>
+              <td>{{ consultation.isCompleted ? (consultation.prescription ? 'Consultation Completed' : 'Consultation Cancelled') : 'Consultation Scheduled' }}</td>
+              <td>
+                <button *ngIf="!consultation.isCompleted" (click)="updateConsultationStatus(consultation)">
+                  Cancel Consultation
+                </button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</sb-layout-dashboard>

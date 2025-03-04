@@ -1,0 +1,27 @@
+<sb-layout-dashboard>
+    <div class="container doctor-panel">
+      <h2 style="font-size: 3rem;"><strong>Personal profile</strong></h2>
+  
+      <h3 class="mb-3 text-center" style="font-size: 1.5rem;"><strong>Personal information</strong></h3>
+      <div class="personal-info">
+        <p><strong>Name</strong> : {{ personalTrainerName }}</p>
+        <p><strong>Username</strong> : {{ personalTrainerUsername }}</p>
+        <p><strong>Speciality</strong> : {{ personalTrainerType }}</p>
+        <p><strong>Phone number</strong> : {{ personalTrainerPhone }}</p>
+        <p><strong>Email</strong> : {{ personalTrainerEmail }}</p>
+        <p><strong>Date of birth</strong> : {{ personalTrainerBirthDate | date:'yyyy-MM-dd'}}</p>
+      </div>
+      
+      <form class="time-slot-form">
+        <div class="mb-3">
+          <div class="mb-3 text-center">
+          <label for="timeSlotInput" class="form-label" style="font-size: 1.5rem;">Inform available hours</label>
+          <input type="datetime-local" class="form-control" id="timeSlotInput" [(ngModel)]="freeTimeSlot" name="freeTimeSlot">
+        </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="submitFreeTimeSlot()">Submit hour</button>
+      </form>
+      
+    </div>
+  </sb-layout-dashboard>
+  

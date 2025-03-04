@@ -1,0 +1,6 @@
+@UnitedHealth.Medical_HostAddress = http://localhost:5207
+
+GET {{UnitedHealth.Medical_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

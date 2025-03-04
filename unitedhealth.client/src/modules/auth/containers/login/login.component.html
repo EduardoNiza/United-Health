@@ -1,0 +1,34 @@
+<sb-layout-auth
+    ><div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                    <div class="card-body">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputUsername">Username</label>
+                                <input class="form-control py-4" formControlName="username" type="text" placeholder="Enter username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                    <div *ngIf="f.username.errors.required">Username is required</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputPassword">Password</label>
+                                <input class="form-control py-4" formControlName="password" type="password" placeholder="Enter password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0"><button class="btn btn-primary">Login <span *ngIf="loading" class="spinner-border spinner-border-sm"></span></button></div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="small"><a routerLink="/auth/register">Need an account? Sign up!</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></sb-layout-auth
+>

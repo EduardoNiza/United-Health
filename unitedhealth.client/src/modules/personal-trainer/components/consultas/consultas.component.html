@@ -1,0 +1,60 @@
+<sb-layout-dashboard>
+  <div class="container doctor-panel">  
+  <h2 style="font-size: 3rem;"><strong>Consultations</strong></h2>
+  <h2 style="font-size: 1.5rem;"><strong>Previous consultations</strong></h2>
+    <table *ngIf="passedconsultations.length > 0">
+      <thead>
+          <tr>
+              <th>Name of the Personal Trainer</th>
+              <th>Name of the patient</th>
+              <th>Date of appoitment</th>
+              <th>Medical prescription</th>
+              <th>Status of the consultation</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let consultation of passedconsultations">
+              <td>{{ consultation.doctorName }}</td>
+              <td>{{ consultation.patientName }}</td>
+              <td>{{ consultation.scheduled | date: 'short' }}</td>
+              <td>{{ consultation.prescription }}</td>
+              <td>Passed</td>
+              <td *ngIf="!consultation.isCompleted">
+                <button (click)="openPrescriptionModal(consultation)">Edit prescription</button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="selectedConsultation" class="prescription-modal">
+      <textarea [(ngModel)]="selectedConsultation.prescription" placeholder="Prescrição Médica"></textarea>
+      <button (click)="submitPrescription()">Update workout</button>
+      <button (click)="selectedConsultation = null">Close</button>
+    </div>
+
+    <h2 style="font-size: 1.5rem; margin-top: 60px;"><strong>Future consultations</strong></h2>
+    <table *ngIf="futureconsultations.length > 0">
+      <thead>
+          <tr>
+              <th>Name of the Personal Trainer</th>
+              <th>Name of the patient</th>
+              <th>Date of the appointment</th>
+              <th>Medical prescription</th>
+              <th>Status of the consultation</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let consultation of futureconsultations">
+              <td>{{ consultation.doctorName }}</td>
+              <td>{{ consultation.patientName }}</td>
+              <td>{{ consultation.scheduled | date: 'short' }}</td>
+              <td>{{ consultation.prescription }}</td>
+              <td>{{ consultation.isCompleted ? 'Appointment canceled' : 'Appointment confirmed' }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+
+</sb-layout-dashboard>

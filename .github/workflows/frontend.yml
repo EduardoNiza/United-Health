@@ -1,0 +1,40 @@
+name: Frontend
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Client Docker image
+      run: docker build -t unitedhealth.azurecr.io/client ./unitedhealth.client
+    - uses: azure/docker-login@v1
+      with:
+        login-server: unitedhealth.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    - name: Push the Client Docker image
+      run: docker push unitedhealth.azurecr.io/client
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build and deploy Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        containerAppName: unitedhealth-client
+        resourceGroup: cs
+        imageToDeploy: unitedhealth.azurecr.io/client:latest

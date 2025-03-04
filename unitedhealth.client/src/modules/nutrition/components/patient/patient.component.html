@@ -1,0 +1,76 @@
+<sb-layout-dashboard>
+  <div class="container">
+    <h2 style="font-size: 3rem;"><strong>Nutritionist</strong></h2>
+    <h2 style="font-size: 1.5rem;"><strong>Schedule an appointment</strong></h2>
+      <div class="doctor-list"> 
+        <ul>
+          <li *ngFor="let nutritionist of getNutritionist()">
+            <button (click)="onSelectNutritionist(nutritionist)">{{ nutritionist.name }}</button>
+          </li>
+        </ul>
+      </div>
+  
+   <div *ngIf="selectedNutritionist">
+        <p>Select an available time slot:</p>
+        <div class="time-slots">
+          <button *ngFor="let timeSlot of selectedNutritionist.freeTimeSlots.split(', ')" class="time-slot" (click)="selectTimeSlot(timeSlot)">
+            {{ timeSlot }}
+          </button>
+        </div>
+        <button *ngIf="selectedTimeSlot" class="schedule-btn" (click)="onScheduleConsultation()">Schedule appointment</button>
+      </div>
+      
+      <h2 style="font-size: 1.5rem; margin-top: 60px;"><strong>Appointments</strong></h2>
+      <h2 style="font-size: 1.1rem;">Previous appointments</h2>
+      <table *ngIf="passedconsultations.length > 0">
+        <thead>
+            <tr>
+                <th>Nutritionist Name</th>
+                <th>Patient Name</th>
+                <th>Date of appointment</th>
+                <th>Diet</th>
+                <th>Appointment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let consultation of passedconsultations">
+                <td>{{ consultation.nutritionistName }}</td>
+                <td>{{ consultation.patientName }}</td>
+                <td>{{ consultation.scheduled | date: 'short' }}</td>
+                <td>{{ consultation.prescription }}</td>
+                <td>Due</td>
+            </tr>
+        </tbody>
+      </table>
+  
+      <h2 style="font-size: 1.1rem; margin-top: 60px;">Next appointments</h2>
+      <table *ngIf="futureconsultations.length > 0">
+        <thead>
+            <tr>
+                <th>Nutritionist Name</th>
+                <th>Patient Name</th>
+                <th>Date of appointment</th>
+                <th>Diet</th>
+                <th>Appointment Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let consultation of futureconsultations">
+                <td>{{ consultation.nutritionistName }}</td>
+                <td>{{ consultation.patientName }}</td>
+                <td>{{ consultation.scheduled | date: 'short' }}</td>
+                <td>{{ consultation.prescription }}</td>
+                <td>{{ consultation.isCompleted ? 'Appointment Canceled' : 'Appointment Active' }}</td>
+                <td *ngIf="!consultation.isCompleted">
+                  <button (click)="updateConsultationStatus(consultation)">
+                    Cancel Appointment
+                  </button>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+  
+    </div>
+  </sb-layout-dashboard>
+  

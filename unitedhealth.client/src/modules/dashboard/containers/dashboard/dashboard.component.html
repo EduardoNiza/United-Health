@@ -1,0 +1,9 @@
+<sb-layout-dashboard>
+    <div *ngIf="isProfile('Patient')">
+        <h1 class="my-4">Dashboard</h1>
+        <sb-dashboard-cards></sb-dashboard-cards>
+    </div>
+    <img *ngIf="isProfile('Nutrition')" src="assets/img/healthy-food.jpg" />
+    <img *ngIf="isProfile('Training')" src="assets/img/gym.jpg" />
+    <img *ngIf="isProfile('Medical')" src="assets/img/doctor.jpg" />
+</sb-layout-dashboard>

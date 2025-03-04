@@ -1,0 +1,6 @@
+@UnitedHealth.Training_HostAddress = http://localhost:5129
+
+GET {{UnitedHealth.Training_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

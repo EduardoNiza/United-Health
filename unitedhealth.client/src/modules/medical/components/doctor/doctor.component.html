@@ -1,0 +1,56 @@
+<sb-layout-dashboard>
+  <div class="container doctor-panel">
+    <h2>Doctor Management Area</h2>
+
+    <form class="specialty-form">
+      <div class="mb-3 dropdown">
+        <label for="specialtyInput" class="form-label">Enter your Specialty below if you haven't already:</label>
+        <select id="specialty-select" (change)="onSelectSpecialty($event.target.value)" [value]="selectedSpecialty">
+          <option *ngFor="let specialty of specialties" [value]="specialty">{{ specialty }}</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="submitSpecialty()">Submit Specialty</button>
+    </form>
+
+    <form class="time-slot-form">
+      <div class="mb-3">
+        <label for="timeSlotInput" class="form-label">Inform Available Time Slot</label>
+        <input type="datetime-local" class="form-control" id="timeSlotInput" [(ngModel)]="freeTimeSlot" name="freeTimeSlot">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="submitFreeTimeSlot()">Submit Time Slot</button>
+    </form>
+
+    <button (click)="loadConsultations()" class="buscar-consultas-btn">Search My Consultations</button>
+    <table *ngIf="consultations.length > 0">
+      <thead>
+        <tr>
+          <th>Doctor's Name</th>
+          <th>Patient's Name</th>
+          <th>Scheduled Date</th>
+          <th>Medical Prescription</th>
+          <th>Consultation Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let consultation of consultations">
+          <td>{{ consultation.doctorName }}</td>
+          <td>{{ consultation.patientName }}</td>
+          <td>{{ consultation.scheduled | date: 'short' }}</td>
+          <td>{{ consultation.prescription }}</td>
+          <td>{{ consultation.isCompleted ? (consultation.prescription ? 'Consultation Completed' : 'Consultation Cancelled') : 'Consultation Scheduled' }}</td>
+          <td>
+            <button *ngIf="!consultation.isCompleted" (click)="openPrescriptionModal(consultation)">Edit Prescription</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Modal for medical prescription editing -->
+    <div *ngIf="selectedConsultation" class="prescription-modal">
+      <textarea [(ngModel)]="selectedConsultation.prescription" placeholder="Medical Prescription"></textarea>
+      <button (click)="submitPrescription()">Update Medical Prescription</button>
+      <button (click)="selectedConsultation = null">Close</button>
+    </div>
+  </div>
+</sb-layout-dashboard>
